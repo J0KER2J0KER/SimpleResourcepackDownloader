@@ -44,7 +44,7 @@ public class OptionsScreenMixin extends Screen {
             saveResourcePack();
             button.setFocused(false);
         }, true).width(20).sprite(START, 16, 16).build();
-        if(mc.player == null || mc.level == null || mc.isLocalServer()) customButton.active = false;
+        if(mc.player == null || mc.level == null || mc.isLocalServer() || mc.getCurrentServer() == null || !mc.getCurrentServer().getResourcePackStatus().name().equalsIgnoreCase("ENABLED")) customButton.active = false;
 
         if (originalButton instanceof AbstractWidget originalWidget) {
             originalWidget.setWidth(originalWidget.getWidth() - 24);
