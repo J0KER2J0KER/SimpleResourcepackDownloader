@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "srd",
+  "version": "${version}",
+  "name": "SimpleResourcepackDownloader",
+  "description": "Download Resourcepacks from Servers.",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/srd/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.j0ker2j0ker.srd.client.SrdDataGenerator"
+    ],
+    "client": [
+      "com.j0ker2j0ker.srd.client.SrdClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "srd.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
