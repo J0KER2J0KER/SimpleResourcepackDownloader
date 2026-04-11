@@ -41,7 +41,7 @@ public class OptionsScreenMixin extends Screen {
         LinearLayout wrapper = LinearLayout.horizontal().spacing(4);
 
         SpriteIconButton customButton = SpriteIconButton.builder(Component.nullToEmpty(""), (button) -> {
-            saveResourcePack();
+            SrdClient.INSTANCE.saveResourcePack();
             button.setFocused(false);
         }, true).width(20).sprite(START, 16, 16).build();
         if(mc.player == null || mc.level == null || mc.isLocalServer() || mc.getCurrentServer() == null || !mc.getCurrentServer().getResourcePackStatus().name().equalsIgnoreCase("ENABLED")) customButton.active = false;
@@ -54,24 +54,5 @@ public class OptionsScreenMixin extends Screen {
         wrapper.addChild(originalButton);
 
         args.set(0, wrapper);
-    }
-
-    private void saveResourcePack() {
-        if(mc.getCurrentServer() != null && mc.getCurrentServer().getResourcePackStatus().name().equalsIgnoreCase("ENABLED")) {
-            Path targetDir = mc.getResourcePackDirectory();
-            if(!Files.exists(targetDir)) {
-                try {
-                    Files.createDirectories(targetDir);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            targetDir = targetDir.resolve(mc.getCurrentServer().ip.replaceAll("[\\\\/:*?\"<>|]", "_") + "_" + SrdClient.resourcepack_locations.getFileName().toString() + ".zip");
-            try {
-                Files.copy(SrdClient.resourcepack_locations, targetDir, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }
