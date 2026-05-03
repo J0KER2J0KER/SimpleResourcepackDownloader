@@ -1,5 +1,6 @@
 package com.j0ker2j0ker.srd.client;
 
+import com.j0ker2j0ker.srd.client.screen.SrdConfigScreen;
 import com.j0ker2j0ker.srd.client.util.SrdConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -50,40 +51,15 @@ public class SrdClient implements ClientModInitializer {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(
                     literal("srd")
-                            .then(literal("help")
+                            .then(literal("config")
                                     .executes(ctx -> {
-                                        ctx.getSource().sendFeedback(
-                                                Component.nullToEmpty("/srd help - Shows this menu.\n/srd autoDownload <true|false> - Set whether resourcepacks should be downloaded automatically on server joining.")
+                                        Minecraft.getInstance().execute(() ->
+                                                Minecraft.getInstance().setScreen(
+                                                        new SrdConfigScreen(Minecraft.getInstance().screen)
+                                                )
                                         );
                                         return 1;
-                                    })
-                            )
-
-                            .then(literal("autoDownload")
-                                    .then(argument("true|false", greedyString())
-                                            .executes(ctx -> {
-                                                String text = getString(ctx, "true|false");
-                                                if(text.equalsIgnoreCase("true")) {
-                                                    CONFIG.autoDownload = true;
-                                                    ctx.getSource().sendFeedback(
-                                                            Component.nullToEmpty("Resourcepacks will be downloaded automatically upon joining a server.")
-                                                    );
-                                                }else
-                                                if(text.equalsIgnoreCase("false")) {
-                                                    CONFIG.autoDownload = false;
-                                                    ctx.getSource().sendFeedback(
-                                                            Component.nullToEmpty("Resourcepacks will NOT be downloaded automatically upon joining a server.")
-                                                    );
-                                                }else {
-                                                    ctx.getSource().sendFeedback(
-                                                            Component.nullToEmpty(text + " is not valid. Enter true or false.")
-                                                    );
-                                                    return 0;
-                                                }
-                                                return 1;
-                                            })
-                                    )
-                            )
+                                    }))
             );
         });
     }

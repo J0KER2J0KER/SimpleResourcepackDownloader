@@ -15,6 +15,9 @@
     ],
     "client": [
       "com.j0ker2j0ker.srd.client.SrdClient"
+    ],
+    "modmenu": [
+      "com.j0ker2j0ker.srd.client.ModMenuEntry"
     ]
   },
   "mixins": [
