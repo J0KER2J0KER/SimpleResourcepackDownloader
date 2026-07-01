@@ -54,8 +54,8 @@ public class SrdClient implements ClientModInitializer {
                             .then(literal("config")
                                     .executes(ctx -> {
                                         Minecraft.getInstance().execute(() ->
-                                                Minecraft.getInstance().setScreen(
-                                                        new SrdConfigScreen(Minecraft.getInstance().screen)
+                                                Minecraft.getInstance().setScreenAndShow(
+                                                        new SrdConfigScreen(Minecraft.getInstance().gui.screen())
                                                 )
                                         );
                                         return 1;
